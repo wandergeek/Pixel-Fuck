@@ -21,5 +21,5 @@ class testApp : public ofBaseApp{
     ofImage fuckImageRows(ofImage input);
     ofImage fuckImageCols(ofImage input);
     void exportImage();
-
+    string getOutFilename();
 };

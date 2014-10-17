@@ -14,9 +14,8 @@ int BLUE_MODE = 5;
 int curMode = RED_MODE;
 bool FUCKROWS = true;
 
-//string inFilename = "napalm.jpg";
-string inFilename = "mountain.jpg";
-string outFilename = "out.png";
+string inFilename = "napalm.jpg";
+//string inFilename = "mountain.jpg";
 
 
 //--------------------------------------------------------------
@@ -151,6 +150,7 @@ void testApp::exportImage(){
     
     ofImage in, out;
     in.loadImage(inFilename);
+    string outFilename = getOutFilename();
     
     if(FUCKROWS) {
         out = fuckImageRows(in);
@@ -160,6 +160,28 @@ void testApp::exportImage(){
     cout << "Exporting image " << outFilename << " with width: " << out.width << ", height: " << out.height << " :::: input width: " << in.width << ", height: " << in.height << endl;
     
     out.saveImage(outFilename);
+}
+
+//--------------------------------------------------------------
+
+string testApp::getOutFilename() {
+    string fileBase = "out";
+    int suffix = 0;
+    bool foundUnique = false;
+    ofFile f;
+    string s;
+    
+    while (!foundUnique) {
+        s = fileBase + ofToString(suffix) + ".png";
+        if(f.doesFileExist(s)) {
+            suffix++;
+            cout << "file " << s << " exists. Trying suffix " << suffix << endl;
+        } else {
+            cout << "file " << s << " does not exist. Writing."  << endl;
+            foundUnique = true;
+        }
+    }
+    return s;
 }
 
 //--------------------------------------------------------------
